@@ -88,6 +88,7 @@ void CRender::LoadFonts()
 
 	ImFontConfig tFontConfig;
 	tFontConfig.OversampleH = 2;
+	tFontConfig.GlyphRanges = io.Fonts->GetGlyphRangesCyrillic(); // Cyrillic UI text (RU translation)
 #ifndef AMALGAM_CUSTOM_FONTS
 	FontSmall = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\verdana.ttf)", H::Draw.Scale(11), &tFontConfig);
 	FontRegular = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\verdana.ttf)", H::Draw.Scale(13), &tFontConfig);
