@@ -1483,7 +1483,7 @@ namespace ImGui
 		return FSlider(sLabel, pVar, nullptr, iMin, iMax, iStep, fmt, iFlags, pHovered);
 	}
 
-	inline bool FDropdown(const char* sLabel, int* pVar, std::vector<const char*> vEntries, std::vector<int> vValues = {}, int iFlags = FDropdownEnum::None, int iSizeOffset = 0, const char* sDefaultPreview = "None", bool* pHovered = nullptr, int* pModified = nullptr)
+	inline bool FDropdown(const char* sLabel, int* pVar, std::vector<const char*> vEntries, std::vector<int> vValues = {}, int iFlags = FDropdownEnum::None, int iSizeOffset = 0, const char* sDefaultPreview = "Нет", bool* pHovered = nullptr, int* pModified = nullptr)
 	{
 		bool bReturn = false;
 
@@ -2469,7 +2469,7 @@ namespace ImGui
 		vValues.push_back(-1);
 
 		int iModified = -2;
-		if (FDropdown("##Bind", &iBind, vEntries, vValues, FDropdownEnum::Modifiable, -84, "None", nullptr, &iModified))
+		if (FDropdown("##Bind", &iBind, vEntries, vValues, FDropdownEnum::Modifiable, -84, "Нет", nullptr, &iModified))
 		{
 			if (iBind != DEFAULT_BIND && iBind < F::Binds.m_vBinds.size())
 				tBind = F::Binds.m_vBinds[iBind];
@@ -2543,7 +2543,7 @@ namespace ImGui
 
 		if (BeginWidgetTable(0, vTable))
 		{
-			FDropdown("Type", &tBind.m_iType, { "Key", "Class", "Weapon type", "Item slot", "Misc" }, {}, FDropdownEnum::None, 0, "None", &bHovered);
+			FDropdown("Тип", &tBind.m_iType, { "Клавиша", "Класс", "Тип оружия", "Слот", "Разное" }, {}, FDropdownEnum::None, 0, "Нет", &bHovered);
 			bLastHovered |= bHovered;
 		} EndChild();
 
@@ -2551,11 +2551,11 @@ namespace ImGui
 		{
 			switch (tBind.m_iType)
 			{
-			case BindEnum::Key: FDropdown("Behavior", &tBind.m_iInfo, { "Hold", "Toggle", "Double click" }, {}, FDropdownEnum::None, 0, "None", &bHovered); break;
-			case BindEnum::Class: FDropdown("Class", &tBind.m_iInfo, { "Scout", "Soldier", "Pyro", "Demoman", "Heavy", "Engineer", "Medic", "Sniper", "Spy" }, {}, FDropdownEnum::None, 0, "None", &bHovered); break;
-			case BindEnum::WeaponType: FDropdown("Weapon type", &tBind.m_iInfo, { "Hitscan", "Projectile", "Melee", "Throwable" }, {}, FDropdownEnum::None, 0, "None", &bHovered); break;
-			case BindEnum::ItemSlot: FDropdown("Item slot", &tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::None, 0, "None", &bHovered); break;
-			case BindEnum::Misc: FDropdown("Misc", &tBind.m_iInfo, { "Spectated", "Spectated 1st", "Spectated 3rd", "##Divider", "Zoomed", "Aiming" }, {}, FDropdownEnum::None); break;
+			case BindEnum::Key: FDropdown("Behavior", &tBind.m_iInfo, { "Удержание", "Переключение", "Двойной клик" }, {}, FDropdownEnum::None, 0, "Нет", &bHovered); break;
+			case BindEnum::Class: FDropdown("Класс", &tBind.m_iInfo, { "Скаут", "Солдат", "Пиро", "Демомен", "Хэви", "Инженер", "Медик", "Снайпер", "Шпион" }, {}, FDropdownEnum::None, 0, "Нет", &bHovered); break;
+			case BindEnum::WeaponType: FDropdown("Тип оружия", &tBind.m_iInfo, { "Хитскан", "Снаряды", "Ближний бой", "Метательное" }, {}, FDropdownEnum::None, 0, "Нет", &bHovered); break;
+			case BindEnum::ItemSlot: FDropdown("Слот", &tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::None, 0, "Нет", &bHovered); break;
+			case BindEnum::Misc: FDropdown("Разное", &tBind.m_iInfo, { "Под наблюдением", "Наблюдение от 1-го лица", "Наблюдение от 3-го лица", "##Divider", "В зуме", "При прицеливании" }, {}, FDropdownEnum::None); break;
 			}
 			bLastHovered |= bHovered;
 		} EndChild();

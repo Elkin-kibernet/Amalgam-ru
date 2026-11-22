@@ -47,7 +47,7 @@ void CMenu::DrawMenu()
 			pDrawList->AddRectFilled(vDrawPos + ImVec2(0, flOffset), vDrawPos + ImVec2(flSize - flInset, vWindowSize.y), F::Render.Background0, H::Draw.Scale(3), ImDrawFlags_RoundCornersBottomLeft);
 
 			SetCursorPos({ H::Draw.Scale(12), H::Draw.Scale(11) });
-			FText("Editing bind", {}, 0, F::Render.FontRegular);
+			FText("Редактирование бинда", {}, 0, F::Render.FontRegular);
 			SetCursorPos({ H::Draw.Scale(12), H::Draw.Scale(35) });
 			PushStyleColor(ImGuiCol_Text, F::Render.Accent.Value);
 			FText(TruncateText(tBind.m_sName, flSize - H::Draw.Scale(28)).c_str(), {}, 0, F::Render.FontRegular);
@@ -80,12 +80,12 @@ void CMenu::DrawMenu()
 		PushFont(F::Render.FontBold);
 		FTabs(
 			{
-				{ "AIMBOT", "GENERAL", "DRAW" },
+				{ "АИМБОТ", "ОБЩЕЕ", "ОТРИСОВКА" },
 				{ "HVH" },
-				{ "VISUALS", "ESP", "MISC##", "MENU" },
-				{ "MISC" },
-				{ "LOGS", "PLAYERLIST", "SETTINGS##", "OUTPUT" },
-				{ "SETTINGS", "CONFIG", "BINDS", "MATERIALS", "MISC##" }
+				{ "ВИЗУАЛЫ", "ESP", "РАЗНОЕ##", "МЕНЮ" },
+				{ "РАЗНОЕ" },
+				{ "ЛОГИ", "ИГРОКИ", "НАСТРОЙКИ##", "ВЫВОД" },
+				{ "НАСТРОЙКИ", "КОНФИГ", "БИНДЫ", "МАТЕРИАЛЫ", "РАЗНОЕ##" }
 			},
 			{ &iTab, &iAimbotTab, nullptr, &iVisualsTab, nullptr, &iLogsTab, &iSettingsTab },
 			{ flSize - H::Draw.Scale(16), H::Draw.Scale(36) },
@@ -99,7 +99,7 @@ void CMenu::DrawMenu()
 
 		static std::string sSearch = "";
 		SetCursorPos({ H::Draw.Scale(8), vWindowSize.y - H::Draw.Scale(37) });
-		FInputText("Search...", sSearch, H::Draw.Scale(123), ImGuiInputTextFlags_None);
+		FInputText("Поиск...", sSearch, H::Draw.Scale(123), ImGuiInputTextFlags_None);
 		bool bSearch = /*IsItemFocused() ||*/ !sSearch.empty();
 		if (!bSearch || FCalcTextSize(sSearch.c_str()).x < 86.f)
 		{
@@ -151,7 +151,7 @@ void CMenu::MenuAimbot(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("General"))
+				if (Section("Общее"))
 				{
 					FDropdown(Vars::Aimbot::General::AimType, FDropdownEnum::Left);
 					FDropdown(Vars::Aimbot::General::TargetSelection, FDropdownEnum::Right);
@@ -180,7 +180,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Aimbot"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }, -8))
 						{
 							FDropdown(Vars::Aimbot::General::AimHoldsFire);
@@ -193,14 +193,14 @@ void CMenu::MenuAimbot(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Backtrack", 8))
+				if (Section("Бэктрек", 8))
 				{
 					FSlider(Vars::Backtrack::Latency);
 					FSlider(Vars::Backtrack::Interp);
 					FSlider(Vars::Backtrack::Window);
 					//FToggle(Vars::Backtrack::PreferOnShot);
 				} EndSection();
-				if (Section("Crit Hack", 8))
+				if (Section("Критхак", 8))
 				{
 					FToggle(Vars::CritHack::ForceCrits, FToggleEnum::Left);
 					FToggle(Vars::CritHack::AvoidRandomCrits, FToggleEnum::Right);
@@ -211,7 +211,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Backtrack"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FSlider(Vars::Backtrack::Offset);
@@ -220,7 +220,7 @@ void CMenu::MenuAimbot(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Healing"))
+				if (Section("Лечение"))
 				{
 					FDropdown(Vars::Aimbot::Healing::HealPriority, FDropdownEnum::Left);
 					FDropdown(Vars::Aimbot::Healing::DangerIgnore, FDropdownEnum::Right);
@@ -235,7 +235,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Healing"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Healing::AutoVaccinatorBulletScale);
@@ -251,7 +251,7 @@ void CMenu::MenuAimbot(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Hitscan"))
+				if (Section("Хитскан"))
 				{
 					FDropdown(Vars::Aimbot::Hitscan::Hitboxes, FDropdownEnum::Left);
 					FDropdown(Vars::Aimbot::Hitscan::MultipointHitboxes, FDropdownEnum::Right);
@@ -267,7 +267,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Hitscan"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }, -8))
 						{
 							FDropdown(Vars::Aimbot::Hitscan::PeekCheck, FDropdownEnum::None, 0, &Hovered); FTooltip("This should stay as doubletap only or off if you want to be able to target hitboxes other than the highest priority one", Hovered);
@@ -279,7 +279,7 @@ void CMenu::MenuAimbot(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Projectile"))
+				if (Section("Снаряды"))
 				{
 					FDropdown(Vars::Aimbot::Projectile::StrafePrediction, FDropdownEnum::Left);
 					FDropdown(Vars::Aimbot::Projectile::Hitboxes, FDropdownEnum::Right);
@@ -306,7 +306,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Projectile"))
 					{
-						FText("General", { 5, 5 });
+						FText("Общее", { 5, 5 });
 						if (FPopupButton("General", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Projectile::VelocityAverageCount, FSliderEnum::Left);
@@ -327,7 +327,7 @@ void CMenu::MenuAimbot(int iTab)
 							EndPopup();
 						}
 
-						FText("Splash", { 5, 5 });
+						FText("Сплеш", { 5, 5 });
 						if (FPopupButton("Splash", { 0, -5 }))
 						{
 							PushTransparent(Vars::Aimbot::Projectile::SplashMode.Value != Vars::Aimbot::Projectile::SplashModeEnum::Trace);
@@ -361,7 +361,7 @@ void CMenu::MenuAimbot(int iTab)
 							EndPopup();
 						}
 
-						FText("Ground", { 5, 5 });
+						FText("Земля", { 5, 5 });
 						if (FPopupButton("Ground", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Projectile::GroundSamples, FSliderEnum::Left);
@@ -376,7 +376,7 @@ void CMenu::MenuAimbot(int iTab)
 							EndPopup();
 						}
 
-						FText("Air", { 5, 5 });
+						FText("Воздух", { 5, 5 });
 						if (FPopupButton("Air", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Projectile::AirSamples, FSliderEnum::Left);
@@ -391,7 +391,7 @@ void CMenu::MenuAimbot(int iTab)
 							EndPopup();
 						}
 
-						FText("Misc", { 5, 5 });
+						FText("Разное", { 5, 5 });
 						if (FPopupButton("Misc", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Projectile::DeltaCount, FSliderEnum::Left);
@@ -402,7 +402,7 @@ void CMenu::MenuAimbot(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Melee", 8))
+				if (Section("Ближний бой", 8))
 				{
 					FToggle(Vars::Aimbot::Melee::AutoBackstab, FToggleEnum::Left);
 					FToggle(Vars::Aimbot::Melee::IgnoreRazorback, FToggleEnum::Right);
@@ -413,7 +413,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug Melee"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FSlider(Vars::Aimbot::Melee::SwingTicks, FSliderEnum::Left);
@@ -438,14 +438,14 @@ void CMenu::MenuAimbot(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Line", 8))
+				if (Section("Линии", 8))
 				{
 					FColorPicker(Vars::Colors::LineIgnoreZ, FColorPickerEnum::None, { 0, H::Draw.Scale(6) }, { H::Draw.Scale(12), H::Draw.Scale(6) });
 					FColorPicker(Vars::Colors::Line, FColorPickerEnum::None, {}, { H::Draw.Scale(12), H::Draw.Scale(6) });
 					FToggle(Vars::Visuals::Line::TracersEnabled);
 					FSlider(Vars::Visuals::Line::DrawDuration);
 				} EndSection();
-				if (Section("Hitbox"))
+				if (Section("Хитбоксы"))
 				{
 					FDropdown(Vars::Visuals::Hitbox::BonesEnabled, FDropdownEnum::None, -20);
 					FColorPicker(Vars::Colors::TargetHitboxEdgeIgnoreZ, FColorPickerEnum::SameLine, { 0, H::Draw.Scale(30) }, { H::Draw.Scale(10), H::Draw.Scale(10) });
@@ -471,7 +471,7 @@ void CMenu::MenuAimbot(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Prediction"))
+				if (Section("Предсказание"))
 				{
 					FDropdown(Vars::Visuals::Prediction::PlayerPath, FDropdownEnum::Left, -10);
 					FColorPicker(Vars::Colors::PlayerPathIgnoreZ, FColorPickerEnum::SameLine, { 0, H::Draw.Scale(20) }, { H::Draw.Scale(10), H::Draw.Scale(20) });
@@ -485,7 +485,7 @@ void CMenu::MenuAimbot(int iTab)
 					FSlider(Vars::Visuals::Prediction::PlayerDrawDuration, FSliderEnum::Left, !Vars::Visuals::Prediction::PlayerDrawDuration[DEFAULT_BIND] ? "timed" : "%g");
 					FSlider(Vars::Visuals::Prediction::ProjectileDrawDuration, FSliderEnum::Right, !Vars::Visuals::Prediction::ProjectileDrawDuration[DEFAULT_BIND] ? "timed" : "%g");
 				} EndSection();
-				if (Section("Simulation"))
+				if (Section("Симуляция"))
 				{
 					FDropdown(Vars::Visuals::Simulation::TrajectoryPath, FDropdownEnum::Left, -10);
 					FColorPicker(Vars::Colors::TrajectoryPathIgnoreZ, FColorPickerEnum::SameLine, { 0, H::Draw.Scale(20) }, { H::Draw.Scale(10), H::Draw.Scale(20) });
@@ -506,7 +506,7 @@ void CMenu::MenuAimbot(int iTab)
 				{
 					if (Section("##Debug"))
 					{
-						FText("Extra", { 5, 5 });
+						FText("Дополнительно", { 5, 5 });
 						if (FPopupButton("Extra", { 0, -5 }, -8))
 						{
 							FDropdown(Vars::Visuals::Prediction::RealPath, FDropdownEnum::None, -10);
@@ -519,11 +519,11 @@ void CMenu::MenuAimbot(int iTab)
 							EndPopup();
 						}
 
-						FText("Simulation", { 5, 5 });
+						FText("Симуляция", { 5, 5 });
 						if (FPopupButton("Simulation", { 0, -5 }))
 						{
 							FToggle(Vars::Visuals::Trajectory::Override);
-							bool bApply = FButton("Apply current");
+							bool bApply = FButton("Применить");
 							FSDropdown(Vars::Visuals::Trajectory::Type);
 							FSlider(Vars::Visuals::Trajectory::OffsetX);
 							FSlider(Vars::Visuals::Trajectory::OffsetY);
@@ -632,7 +632,7 @@ void CMenu::MenuHVH(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Antiaim", 8))
+				if (Section("Анти-аим", 8))
 				{
 					FToggle(Vars::AntiAim::Enabled, FToggleEnum::Left);
 					FToggle(Vars::AntiAim::HidePitchOnShot, FToggleEnum::Right);
@@ -666,7 +666,7 @@ void CMenu::MenuHVH(int iTab)
 				{
 					if (Section("##Debug Antiaim"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FToggle(Vars::AntiAim::AntiAimLines);
@@ -675,7 +675,7 @@ void CMenu::MenuHVH(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Resolver", 8))
+				if (Section("Резолвер", 8))
 				{
 					FToggle(Vars::Resolver::Enabled, FToggleEnum::Left);
 					PushTransparent(!Vars::Resolver::Enabled.Value);
@@ -708,7 +708,7 @@ void CMenu::MenuHVH(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Doubletap", 8))
+				if (Section("Даблтап", 8))
 				{
 					FToggle(Vars::Doubletap::Doubletap, FToggleEnum::Left);
 					FToggle(Vars::Doubletap::Warp, FToggleEnum::Right);
@@ -719,7 +719,7 @@ void CMenu::MenuHVH(int iTab)
 					FSlider(Vars::Doubletap::RechargeLimit, FSliderEnum::Left);
 					FSlider(Vars::Doubletap::PassiveRecharge, FSliderEnum::Right);
 				} EndSection();
-				if (Section("Fakelag"))
+				if (Section("Фейклаг"))
 				{
 					FDropdown(Vars::Fakelag::Fakelag, FSliderEnum::Left);
 					FDropdown(Vars::Fakelag::Options, FDropdownEnum::Right);
@@ -740,7 +740,7 @@ void CMenu::MenuHVH(int iTab)
 				{
 					if (Section("##Debug Fakelag"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FToggle(Vars::Fakelag::RetainSoldierOnly);
@@ -749,11 +749,11 @@ void CMenu::MenuHVH(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Auto Peek", 8))
+				if (Section("Автопик", 8))
 				{
 					FToggle(Vars::AutoPeek::Enabled);
 				} EndSection();
-				if (Section("Speedhack", 8))
+				if (Section("Спидхак", 8))
 				{
 					PushTransparent(Vars::Speedhack::Scale.Value == 1);
 					{
@@ -781,17 +781,17 @@ void CMenu::MenuVisuals(int iTab)
 		// fake angle/viewmodel visuals, pickup timers?
 		static size_t iCurrentGroup = 0;
 
-		if (Section("Groups"))
+		if (Section("Группы"))
 		{
 			static std::string sStaticName;
 
 			PushDisabled(F::Groups.m_vGroups.size() >= sizeof(int) * 8); // for active groups flags
 			{
-				FSDropdown("Name", &sStaticName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("CREATE").x) - 36);
+				FSDropdown("Имя", &sStaticName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("СОЗДАТЬ").x) - 36);
 
 				PushDisabled(Disabled || sStaticName.empty());
 				{
-					if (FButton("Create", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
+					if (FButton("Создать", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
 					{
 						F::Groups.m_vGroups.emplace_back(sStaticName);
 						sStaticName.clear();
@@ -807,7 +807,7 @@ void CMenu::MenuVisuals(int iTab)
 
 			PushStyleColor(ImGuiCol_Text, F::Render.Inactive.Value);
 			SetCursorPos({ H::Draw.Scale(13), H::Draw.Scale(80) });
-			FText("Groups");
+			FText("Группы");
 			SetCursorPosY(GetCursorPosY() - H::Draw.Scale(5));
 			PopStyleColor();
 
@@ -903,7 +903,7 @@ void CMenu::MenuVisuals(int iTab)
 
 					PushDisabled(F::Groups.m_vGroups.size() >= sizeof(int) * 8);
 					{
-						bDuplicate = FButton("Duplicate");
+						bDuplicate = FButton("Дублировать");
 					}
 					PopDisabled();
 
@@ -932,32 +932,32 @@ void CMenu::MenuVisuals(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Color", 8))
+				if (Section("Цвет", 8))
 				{
-					FColorPicker("Group color", &tGroup.m_tColor, FColorPickerEnum::Left);
+					FColorPicker("Цвет группы", &tGroup.m_tColor, FColorPickerEnum::Left);
 					FToggle("Tags override color", &tGroup.m_bTagsOverrideColor, FToggleEnum::Right);
 				} EndSection();
-				if (Section("Targets"))
+				if (Section("Цели"))
 				{
-					FDropdown("Targets", &tGroup.m_iTargets, { "Players", "Buildings", "Projectiles", "Ragdolls", "Objective", "NPCs", "Health", "Ammo", "Money", "Powerups", "Spellbook", "Bombs", "Gargoyle", "##Divider", "Fake angle", "Viewmodel weapon", "Viewmodel hands" }, {}, FDropdownEnum::Multi);
+					FDropdown("Цели", &tGroup.m_iTargets, { "Игроки", "Buildings", "Projectiles", "Ragdolls", "Objective", "NPCs", "Health", "Ammo", "Money", "Powerups", "Spellbook", "Bombs", "Gargoyle", "##Divider", "Fake angle", "Viewmodel weapon", "Viewmodel hands" }, {}, FDropdownEnum::Multi);
 				} EndSection();
-				if (Section("Conditions"))
+				if (Section("Состояния"))
 				{
-					FDropdown("Conditions", &tGroup.m_iConditions, { "Enemy", "Team", "BLU", "RED", "##Divider", "Local", "Friends", "Party", "Priority", "Target", "##Divider", "Dormant" }, {}, FDropdownEnum::Multi);
+					FDropdown("Состояния", &tGroup.m_iConditions, { "Враг", "Team", "BLU", "RED", "##Divider", "Local", "Friends", "Party", "Приоритет", "Target", "##Divider", "Dormant" }, {}, FDropdownEnum::Multi);
 					Divider(H::Draw.Scale(8), H::Draw.Scale(-1));
 					PushTransparent(!(tGroup.m_iTargets & TargetsEnum::Players));
 					{
-						FDropdown("Players", &tGroup.m_iPlayers, { "Scout", "Soldier", "Pyro", "Demoman", "Heavy", "Engineer", "Medic", "Sniper", "Spy", "##Divider", "Invulnerable", "Crits", "Invisible", "Disguise", "Hurt" }, {}, FDropdownEnum::Multi, 0, "All");
+						FDropdown("Игроки", &tGroup.m_iPlayers, { "Скаут", "Солдат", "Пиро", "Демомен", "Хэви", "Инженер", "Медик", "Снайпер", "Шпион", "##Divider", "Неуязвимые", "Криты", "Невидимые", "Маскировка", "Ранен" }, {}, FDropdownEnum::Multi, 0, "Все");
 					}
 					PopTransparent();
 					PushTransparent(!(tGroup.m_iTargets & TargetsEnum::Buildings));
 					{
-						FDropdown("Buildings", &tGroup.m_iBuildings, { "Sentry", "Dispenser", "Teleporter", "##Divider", "Hurt" }, {}, FDropdownEnum::Multi, 0, "All");
+						FDropdown("Buildings", &tGroup.m_iBuildings, { "Sentry", "Dispenser", "Teleporter", "##Divider", "Ранен" }, {}, FDropdownEnum::Multi, 0, "Все");
 					}
 					PopTransparent();
 					PushTransparent(!(tGroup.m_iTargets & TargetsEnum::Projectiles));
 					{
-						FDropdown("Projectiles", &tGroup.m_iProjectiles, { "Rocket", "Sticky", "Pipe", "Arrow", "Heal", "Flare", "Fire", "Repair", "Cleaver", "Milk", "Jarate", "Gas", "Bauble", "Baseball", "Energy", "Short circuit", "Meteor shower", "Lightning", "Fireball", "Bomb", "Bats", "Pumpkin", "Monoculus", "Skeleton", "Misc", "##Divider", "Crit", "Minicrit" }, {}, FDropdownEnum::Multi, 0, "All");
+						FDropdown("Projectiles", &tGroup.m_iProjectiles, { "Rocket", "Sticky", "Pipe", "Arrow", "Heal", "Flare", "Fire", "Repair", "Cleaver", "Milk", "Jarate", "Gas", "Bauble", "Baseball", "Energy", "Short circuit", "Meteor shower", "Lightning", "Fireball", "Bomb", "Bats", "Pumpkin", "Monoculus", "Skeleton", "Разное", "##Divider", "Crit", "Minicrit" }, {}, FDropdownEnum::Multi, 0, "Все");
 					}
 					PopTransparent();
 				} EndSection();
@@ -981,7 +981,7 @@ void CMenu::MenuVisuals(int iTab)
 					}
 					if (tGroup.m_iTargets & TargetsEnum::Players)
 					{
-						vEntries.insert(vEntries.end(), { "Uber bar", "Uber text", "Class icon", "Class text", "Weapon icon", "Weapon text", "Priority", "Labels", "Buffs", "Debuffs" });
+						vEntries.insert(vEntries.end(), { "Убер-бар", "Текст убера", "Иконка класса", "Текст класса", "Иконка оружия", "Текст оружия", "Приоритет", "Метки", "Баффы", "Дебаффы" });
 						vValues.insert(vValues.end(), { ESPEnum::UberBar, ESPEnum::UberText, ESPEnum::ClassIcon, ESPEnum::ClassText, ESPEnum::WeaponIcon, ESPEnum::WeaponText, ESPEnum::Priority, ESPEnum::Labels, ESPEnum::Buffs, ESPEnum::Debuffs });
 					}
 					if (tGroup.m_iTargets & (TargetsEnum::Players | TargetsEnum::Buildings | TargetsEnum::Projectiles | TargetsEnum::Objective))
@@ -1016,17 +1016,17 @@ void CMenu::MenuVisuals(int iTab)
 					}
 					PopTransparent();
 				} EndSection();
-				if (Section("Chams"))
+				if (Section("Чамы"))
 				{
 					if (!tGroup.m_iTargets || tGroup.m_iTargets & TargetsEnum::Occluded)
 					{
-						FMDropdown("Visible material", &tGroup.m_tChams.Visible, FDropdownEnum::Left);
-						FMDropdown("Occluded material", &tGroup.m_tChams.Occluded, FDropdownEnum::Right);
+						FMDropdown("Видимый материал", &tGroup.m_tChams.Visible, FDropdownEnum::Left);
+						FMDropdown("Материал за стеной", &tGroup.m_tChams.Occluded, FDropdownEnum::Right);
 					}
 					else
 						FMDropdown("Material", &tGroup.m_tChams.Visible);
 				} EndSection();
-				if (Section("Glow", 8))
+				if (Section("Свечение", 8))
 				{
 					PushTransparent(!tGroup.m_tGlow.Stencil);
 					{
@@ -1039,7 +1039,7 @@ void CMenu::MenuVisuals(int iTab)
 					}
 					PopTransparent();
 				} EndSection();
-				if (Section("Misc", 8))
+				if (Section("Разное", 8))
 				{
 					FToggle("Offscreen arrows", &tGroup.m_bOffscreenArrows, FToggleEnum::Left);
 					if (FPopupButton("OffscreenArrows"))
@@ -1055,10 +1055,10 @@ void CMenu::MenuVisuals(int iTab)
 					FToggle("Backtrack", &tGroup.m_iBacktrack, BacktrackEnum::Enabled, FToggleEnum::Left);
 					if (FPopupButton("Backtrack", {}, -8))
 					{
-						FDropdown("##Draw", &tGroup.m_iBacktrack, { "Last", "First", "##Divider", "Always" }, { BacktrackEnum::Last, BacktrackEnum::First, BacktrackEnum::Always }, FDropdownEnum::Multi | FDropdownEnum::NoSanitization, 0, "All");
+						FDropdown("##Draw", &tGroup.m_iBacktrack, { "Last", "First", "##Divider", "Always" }, { BacktrackEnum::Last, BacktrackEnum::First, BacktrackEnum::Always }, FDropdownEnum::Multi | FDropdownEnum::NoSanitization, 0, "Все");
 
-						FMDropdown("Visible material", &tGroup.m_tBacktrackChams.Visible, FDropdownEnum::Left);
-						FMDropdown("Occluded material", &tGroup.m_tBacktrackChams.Occluded, FDropdownEnum::Right);
+						FMDropdown("Видимый материал", &tGroup.m_tBacktrackChams.Visible, FDropdownEnum::Left);
+						FMDropdown("Материал за стеной", &tGroup.m_tBacktrackChams.Occluded, FDropdownEnum::Right);
 
 						SetCursorPosY(GetCursorPosY() + H::Draw.Scale(8));
 						PushTransparent(!tGroup.m_tBacktrackGlow.Stencil);
@@ -1105,7 +1105,7 @@ void CMenu::MenuVisuals(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("UI"))
+				if (Section("Интерфейс"))
 				{
 					FDropdown(Vars::Visuals::UI::StreamerMode, FDropdownEnum::Left);
 					FDropdown(Vars::Visuals::UI::ChatTags, FDropdownEnum::Right, -10);
@@ -1132,7 +1132,7 @@ void CMenu::MenuVisuals(int iTab)
 					FToggle(Vars::Visuals::UI::ScoreboardColors, FToggleEnum::Left);
 					FToggle(Vars::Visuals::UI::CleanScreenshots, FToggleEnum::Right);
 				} EndSection();
-				if (Section("Thirdperson", 8))
+				if (Section("Третье лицо", 8))
 				{
 					FToggle(Vars::Visuals::Thirdperson::Enabled, FToggleEnum::Left);
 					FToggle(Vars::Visuals::Thirdperson::Crosshair, FToggleEnum::Right);
@@ -1144,7 +1144,7 @@ void CMenu::MenuVisuals(int iTab)
 				{
 					if (Section("##Debug"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FToggle(Vars::Visuals::Thirdperson::Scale, FToggleEnum::Left);
@@ -1154,7 +1154,7 @@ void CMenu::MenuVisuals(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Effects"))
+				if (Section("Эффекты"))
 				{
 					// https://developer.valvesoftware.com/wiki/Team_Fortress_2/Particles
 					// https://forums.alliedmods.net/showthread.php?t=127111
@@ -1173,7 +1173,7 @@ void CMenu::MenuVisuals(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Removals", 8))
+				if (Section("Удаления", 8))
 				{
 					FToggle(Vars::Visuals::Removals::Interpolation, FToggleEnum::Left);
 					PushTransparent(Vars::Visuals::Removals::Interpolation.Value);
@@ -1193,7 +1193,7 @@ void CMenu::MenuVisuals(int iTab)
 					FToggle(Vars::Visuals::Removals::Gibs, FToggleEnum::Right);
 					FToggle(Vars::Visuals::Removals::MOTD, FToggleEnum::Left);
 				} EndSection();
-				if (Section("Viewmodel", 8))
+				if (Section("Модель оружия", 8))
 				{
 					FToggle(Vars::Visuals::Viewmodel::CrosshairAim, FToggleEnum::Left);
 					FToggle(Vars::Visuals::Viewmodel::ViewmodelAim, FToggleEnum::Right);
@@ -1210,7 +1210,7 @@ void CMenu::MenuVisuals(int iTab)
 					}
 					PopTransparent();
 				} EndSection();
-				if (Section("World"))
+				if (Section("Мир"))
 				{
 					FDropdown(Vars::Visuals::World::Modulations);
 					FSDropdown(Vars::Visuals::World::WorldTexture, FDropdownEnum::Left);
@@ -1256,7 +1256,7 @@ void CMenu::MenuVisuals(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Settings", 8))
+				if (Section("Настройки", 8))
 				{
 					FColorPicker(Vars::Menu::Theme::Accent, FColorPickerEnum::Left);
 					FColorPicker(Vars::Menu::Theme::Background, FColorPickerEnum::Right);
@@ -1272,7 +1272,7 @@ void CMenu::MenuVisuals(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Indicators"))
+				if (Section("Индикаторы"))
 				{
 					FDropdown(Vars::Menu::Indicators);
 					if (FSlider(Vars::Menu::Scale))
@@ -1284,7 +1284,7 @@ void CMenu::MenuVisuals(int iTab)
 				{
 					if (Section("##Debug"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FColorPicker(Vars::Colors::IndicatorGood, FColorPickerEnum::Left);
@@ -1323,7 +1323,7 @@ void CMenu::MenuMisc(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Movement"))
+				if (Section("Движение"))
 				{
 					FDropdown(Vars::Misc::Movement::AutoStrafe);
 					PushTransparent(Vars::Misc::Movement::AutoStrafe.Value != Vars::Misc::Movement::AutoStrafeEnum::Directional);
@@ -1351,7 +1351,7 @@ void CMenu::MenuMisc(int iTab)
 				{
 					if (Section("##Debug"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FSlider(Vars::Misc::Movement::AutoRocketJumpChokeGrounded, FToggleEnum::Left);
@@ -1365,7 +1365,7 @@ void CMenu::MenuMisc(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Automation"))
+				if (Section("Автоматизация"))
 				{
 					FDropdown(Vars::Misc::Automation::AntiBackstab); // pitch/fake _might_ slip up some auto backstabs
 					FToggle(Vars::Misc::Automation::TauntControl, FToggleEnum::Left);
@@ -1376,7 +1376,7 @@ void CMenu::MenuMisc(int iTab)
 					FToggle(Vars::Misc::Automation::AutoF1Priority, FToggleEnum::Right);
 					FToggle(Vars::Misc::Automation::AcceptItemDrops);
 				} EndSection();
-				if (Section("Mann vs. Machine", 8))
+				if (Section("MvM", 8))
 				{
 					FToggle(Vars::Misc::MannVsMachine::InstantRespawn, FToggleEnum::Left);
 					FToggle(Vars::Misc::MannVsMachine::InstantRevive, FToggleEnum::Right);
@@ -1386,7 +1386,7 @@ void CMenu::MenuMisc(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Exploits", 8))
+				if (Section("Эксплойты", 8))
 				{
 					FToggle(Vars::Misc::Exploits::PureBypass, FToggleEnum::Left);
 					FToggle(Vars::Misc::Exploits::CheatsBypass, FToggleEnum::Right);
@@ -1401,7 +1401,7 @@ void CMenu::MenuMisc(int iTab)
 					}
 					PopTransparent();
 				} EndSection();
-				if (Section("Game", 8))
+				if (Section("Игра", 8))
 				{
 					FToggle(Vars::Misc::Game::NetworkFix, FToggleEnum::Left);
 					FToggle(Vars::Misc::Game::SetupBonesOptimization, FToggleEnum::Right);
@@ -1411,7 +1411,7 @@ void CMenu::MenuMisc(int iTab)
 				{
 					if (Section("##Debug AntiCheat"))
 					{
-						FText("Debug", { 5, 5 });
+						FText("Отладка", { 5, 5 });
 						if (FPopupButton("Debug", { 0, -5 }))
 						{
 							FToggle(Vars::Misc::Game::AntiCheatCritHack);
@@ -1420,13 +1420,13 @@ void CMenu::MenuMisc(int iTab)
 						}
 					} EndSection();
 				}
-				if (Section("Queueing"))
+				if (Section("Очередь"))
 				{
 					FDropdown(Vars::Misc::Queueing::ForceRegions);
 					FToggle(Vars::Misc::Queueing::ExtendQueue, FToggleEnum::Left);
 					FToggle(Vars::Misc::Queueing::AutoCasualQueue, FToggleEnum::Right);
 				} EndSection();
-				if (Section("Sound"))
+				if (Section("Звук"))
 				{
 					FDropdown(Vars::Misc::Sound::Block);
 					FToggle(Vars::Misc::Sound::HitsoundAlways, FToggleEnum::Left);
@@ -1450,7 +1450,7 @@ void CMenu::MenuLogs(int iTab)
 	// PlayerList
 	case 0:
 	{
-		if (Section("Players"))
+		if (Section("Игроки"))
 		{
 			if (I::EngineClient->IsInGame())
 			{
@@ -1628,7 +1628,7 @@ void CMenu::MenuLogs(int iTab)
 
 						if (!tPlayer.m_bFake)
 						{
-							if (FBeginMenu("Add tag"))
+							if (FBeginMenu("Добавить тег"))
 							{
 								for (auto it = F::PlayerUtils.m_vTags.begin(); it != F::PlayerUtils.m_vTags.end(); it++)
 								{
@@ -1829,11 +1829,11 @@ void CMenu::MenuLogs(int iTab)
 			else
 			{
 				SetCursorPos({ H::Draw.Scale(15), H::Draw.Scale(40) });
-				FText("Not ingame");
+				FText("Не в игре");
 				DebugDummy({ 0, H::Draw.Scale(8) });
 			}
 		} EndSection();
-		if (Section("Tags"))
+		if (Section("Теги"))
 		{
 			static int iID = -1;
 			static PriorityLabel_t tTag = {};
@@ -1842,13 +1842,13 @@ void CMenu::MenuLogs(int iTab)
 
 			if (BeginWidgetTable(0, vTable))
 			{
-				FSDropdown("Name", &tTag.m_sName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate, -10);
-				FColorPicker("Color", &tTag.m_tColor, FColorPickerEnum::SameLine, {}, { H::Draw.Scale(10), H::Draw.Scale(40) });
+				FSDropdown("Имя", &tTag.m_sName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate, -10);
+				FColorPicker("Цвет", &tTag.m_tColor, FColorPickerEnum::SameLine, {}, { H::Draw.Scale(10), H::Draw.Scale(40) });
 
 				PushDisabled(iID == DEFAULT_TAG || iID == IGNORED_TAG);
 				{
 					int iLabel = Disabled ? 0 : tTag.m_bLabel;
-					FDropdown("Type", &iLabel, { "Priority", "Label" }, {}, FDropdownEnum::Right);
+					FDropdown("Тип", &iLabel, { "Приоритет", "Метка" }, {}, FDropdownEnum::Right);
 					tTag.m_bLabel = iLabel;
 					if (Disabled)
 						tTag.m_bLabel = false;
@@ -1861,7 +1861,7 @@ void CMenu::MenuLogs(int iTab)
 				PushTransparent(tTag.m_bLabel); // transparent if we want a label, user can still use to sort
 				{
 					SetCursorPosY(GetCursorPos().y + H::Draw.Scale(12));
-					FSlider("Priority", &tTag.m_iPriority, -10, 10);
+					FSlider("Приоритет", &tTag.m_iPriority, -10, 10);
 				}
 				PopTransparent();
 			} EndChild();
@@ -1996,7 +1996,7 @@ void CMenu::MenuLogs(int iTab)
 					PushDisabled(_iID == DEFAULT_TAG || _iID == IGNORED_TAG);
 					{
 						int iLabel = Disabled ? 0 : _tTag2.m_bLabel;
-						if (FDropdown("Type##", &iLabel, { "Priority", "Label" }))
+						if (FDropdown("Type##", &iLabel, { "Приоритет", "Метка" }))
 							bSave = true;
 						_tTag2.m_bLabel = iLabel;
 						if (Disabled)
@@ -2014,9 +2014,9 @@ void CMenu::MenuLogs(int iTab)
 				}
 				else if (FBeginPopupModal(std::format("DeleteTag{}", _iID).c_str()))
 				{
-					FText(std::format("Do you really want to delete '{}'?", _tTag.m_sName).c_str());
+					FText(std::format("Удалить «{}»?", _tTag.m_sName).c_str());
 
-					if (FButton("Yes", FButtonEnum::Left))
+					if (FButton("Да", FButtonEnum::Left))
 					{
 						F::PlayerUtils.m_vTags.erase(it);
 						F::PlayerUtils.m_bSave = F::PlayerUtils.m_bSave = true;
@@ -2046,7 +2046,7 @@ void CMenu::MenuLogs(int iTab)
 
 						CloseCurrentPopup();
 					}
-					if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+					if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 						CloseCurrentPopup();
 
 					EndPopup();
@@ -2054,8 +2054,8 @@ void CMenu::MenuLogs(int iTab)
 			};
 
 			PushStyleColor(ImGuiCol_Text, F::Render.Inactive.Value);
-			SetCursorPos({ H::Draw.Scale(13), H::Draw.Scale(80) }); FText("Priorities");
-			SetCursorPos({ GetWindowWidth() * 2 / 3 + H::Draw.Scale(9), H::Draw.Scale(80) }); FText("Labels");
+			SetCursorPos({ H::Draw.Scale(13), H::Draw.Scale(80) }); FText("Приоритеты");
+			SetCursorPos({ GetWindowWidth() * 2 / 3 + H::Draw.Scale(9), H::Draw.Scale(80) }); FText("Метки");
 			PopStyleColor();
 
 			std::vector<std::pair<std::vector<PriorityLabel_t>::iterator, PriorityLabel_t>> vPriorities = {}, vLabels = {};
@@ -2116,7 +2116,7 @@ void CMenu::MenuLogs(int iTab)
 				if (FButton(ICON_MD_FOLDER, FButtonEnum::Fit | FButtonEnum::SameLine, { 30, 30 }, 0, F::Render.IconFont))
 					ShellExecuteA(NULL, NULL, F::Configs.m_sCorePath.c_str(), NULL, NULL, SW_SHOWNORMAL);
 
-				if (FButton("Export", FButtonEnum::Fit | FButtonEnum::SameLine))
+				if (FButton("Экспорт", FButtonEnum::Fit | FButtonEnum::SameLine))
 				{
 					// this should be up2date anyways
 					std::ifstream fStream(F::Configs.m_sCorePath + "Players.json", std::ios_base::app);
@@ -2143,7 +2143,7 @@ void CMenu::MenuLogs(int iTab)
 					static std::unordered_map<uint32_t, std::string> mPlayerAliases = {};
 					static std::unordered_map<int, int> mAs = {};
 
-					if (FButton("Import", FButtonEnum::Fit | FButtonEnum::SameLine))
+					if (FButton("Импорт", FButtonEnum::Fit | FButtonEnum::SameLine))
 					{
 						try
 						{
@@ -2241,8 +2241,8 @@ void CMenu::MenuLogs(int iTab)
 					SetNextWindowSize({ H::Draw.Scale(300), 0 });
 					if (FBeginPopupModal("ImportPlayerlist"))
 					{
-						FText("Import");
-						FText("As", {}, FTextEnum::Right | FTextEnum::SameLine);
+						FText("Импорт");
+						FText("Как", {}, FTextEnum::Right | FTextEnum::SameLine);
 
 						for (int i = 0; i < vTags.size(); i++)
 						{
@@ -2277,7 +2277,7 @@ void CMenu::MenuLogs(int iTab)
 							PopTransparent();
 						}
 
-						if (FButton("Import", FButtonEnum::Left))
+						if (FButton("Импорт", FButtonEnum::Left))
 						{
 							for (auto& [uAccountID, vTags] : mPlayerTags)
 							{
@@ -2299,7 +2299,7 @@ void CMenu::MenuLogs(int iTab)
 
 							CloseCurrentPopup();
 						}
-						if (FButton("Cancel", FButtonEnum::Right | FButtonEnum::SameLine))
+						if (FButton("Отмена", FButtonEnum::Right | FButtonEnum::SameLine))
 							CloseCurrentPopup();
 
 						EndPopup();
@@ -2346,14 +2346,14 @@ void CMenu::MenuLogs(int iTab)
 			/* Column 1 */
 			TableNextColumn();
 			{
-				if (Section("Logging"))
+				if (Section("Логи"))
 				{
 					FDropdown(Vars::Logging::Logs);
 					FDropdown(Vars::Logging::NotificationPosition);
 					FSlider(Vars::Logging::NotificationTime);
 					FSlider(Vars::Logging::MaxNotifications);
 				} EndSection();
-				if (Section("Cheat Detection"))
+				if (Section("Детект читов"))
 				{
 					FDropdown(Vars::CheatDetection::Methods);
 					PushTransparent(!Vars::CheatDetection::DetectionsRequired.Value);
@@ -2377,7 +2377,7 @@ void CMenu::MenuLogs(int iTab)
 			/* Column 2 */
 			TableNextColumn();
 			{
-				if (Section("Log options"))
+				if (Section("Опции логов"))
 				{
 					PushTransparent(!(Vars::Logging::Logs.Value & Vars::Logging::LogsEnum::VoteStart));
 					{
@@ -2484,9 +2484,9 @@ void CMenu::MenuLogs(int iTab)
 				{
 					PushStyleVar(ImGuiStyleVar_ItemSpacing, { H::Draw.Scale(8), H::Draw.Scale(8) });
 
-					if (FSelectable("Copy"))
+					if (FSelectable("Копировать"))
 						SDK::SetClipboard(std::format("{}{}{}", tOutput.m_sFunction, tOutput.m_sFunction != "" ? " " : "", tOutput.m_sLog));
-					if (FSelectable("Clear"))
+					if (FSelectable("Очистить"))
 						bClear = true;
 
 					PopStyleVar();
@@ -2514,11 +2514,11 @@ void CMenu::MenuSettings(int iTab)
 		if (BeginTable("ConfigSettingsTable", 2))
 		{
 			/*
-			if (Section("Config"))
+			if (Section("Конфиг"))
 			{
 				static int iCurrentType = 0;
 				PushFont(F::Render.FontBold);
-				FTabs({ "GENERAL", "VISUAL", }, &iCurrentType, { H::Draw.Scale(20), H::Draw.Scale(28) }, { GetWindowWidth(), 0 }, FTabsEnum::AlignReverse | FTabsEnum::Fit);
+				FTabs({ "ОБЩЕЕ", "VISUAL", }, &iCurrentType, { H::Draw.Scale(20), H::Draw.Scale(28) }, { GetWindowWidth(), 0 }, FTabsEnum::AlignReverse | FTabsEnum::Fit);
 				SetCursorPosY(GetCursorPosY() - H::Draw.Scale());
 				PopFont();
 
@@ -2532,10 +2532,10 @@ void CMenu::MenuSettings(int iTab)
 				auto sType = !bVisual ? "Config" : "Visual";
 				bool bNoSave = GetAsyncKeyState(VK_SHIFT) & 0x8000;
 
-				FSDropdown("Name", &sStaticName, {}, FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("CREATE").x + H::Draw.Scale(40)) - 44);
+				FSDropdown("Имя", &sStaticName, {}, FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("СОЗДАТЬ").x + H::Draw.Scale(40)) - 44);
 				PushDisabled(sStaticName.empty());
 				{
-					if (FButton("Create", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
+					if (FButton("Создать", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
 					{
 						if (!std::filesystem::exists(sPath + sStaticName))
 						{
@@ -2625,9 +2625,9 @@ void CMenu::MenuSettings(int iTab)
 
 					if (FBeginPopupModal(std::format("Save{}{}", sType, sConfigName).c_str()))
 					{
-						FText(std::format("Do you really want to override '{}'?", sConfigName).c_str());
+						FText(std::format("Перезаписать «{}»?", sConfigName).c_str());
 
-						if (FButton("Yes, override", FButtonEnum::Left))
+						if (FButton("Да, перезаписать", FButtonEnum::Left))
 						{
 							if (!bVisual)
 								F::Configs.SaveConfig(sConfigName);
@@ -2635,18 +2635,18 @@ void CMenu::MenuSettings(int iTab)
 								F::Configs.SaveVisual(sConfigName);
 							CloseCurrentPopup();
 						}
-						if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+						if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 							CloseCurrentPopup();
 
 						EndPopup();
 					}
 					else if (FBeginPopupModal(std::format("Remove{}{}", sType, sConfigName).c_str()))
 					{
-						FText(std::format("Do you really want to remove '{}'?", sConfigName).c_str());
+						FText(std::format("Удалить «{}»?", sConfigName).c_str());
 
 						PushDisabled(!bVisual && FNV1A::Hash32(sConfigName.c_str()) == FNV1A::Hash32Const("default"));
 						{
-							if (FButton("Yes, delete", FButtonEnum::Fit))
+							if (FButton("Да, удалить", FButtonEnum::Fit))
 							{
 								if (!bVisual)
 									F::Configs.DeleteConfig(sConfigName);
@@ -2656,7 +2656,7 @@ void CMenu::MenuSettings(int iTab)
 							}
 						}
 						PopDisabled();
-						if (FButton("Yes, reset", FButtonEnum::Fit | FButtonEnum::SameLine))
+						if (FButton("Да, сбросить", FButtonEnum::Fit | FButtonEnum::SameLine))
 						{
 							if (!bVisual)
 								F::Configs.ResetConfig(sConfigName);
@@ -2664,7 +2664,7 @@ void CMenu::MenuSettings(int iTab)
 								F::Configs.ResetVisual(sConfigName);
 							CloseCurrentPopup();
 						}
-						if (FButton("No", FButtonEnum::Fit | FButtonEnum::SameLine))
+						if (FButton("Нет", FButtonEnum::Fit | FButtonEnum::SameLine))
 							CloseCurrentPopup();
 
 						EndPopup();
@@ -2677,7 +2677,7 @@ void CMenu::MenuSettings(int iTab)
 
 			/* Column 1 */
 			TableNextColumn();
-			if (Section("Config"))
+			if (Section("Конфиг"))
 			{
 				static std::string sStaticName;
 
@@ -2692,7 +2692,7 @@ void CMenu::MenuSettings(int iTab)
 
 			/* Column 2 */
 			TableNextColumn();
-			if (Section("Visuals"))
+			if (Section("Визуалы"))
 			{
 				static std::string sStaticName;
 
@@ -2706,7 +2706,7 @@ void CMenu::MenuSettings(int iTab)
 	// Binds
 	case 1:
 	{
-		if (Section("Settings", 8))
+		if (Section("Настройки", 8))
 		{
 			auto vTable = WidgetTable(3, H::Draw.Scale(16));
 
@@ -2725,7 +2725,7 @@ void CMenu::MenuSettings(int iTab)
 				FToggle(Vars::Menu::MenuShowsBinds);
 			} EndChild();
 		} EndSection();
-		if (Section("Binds"))
+		if (Section("Бинды"))
 		{
 			static int iBind = DEFAULT_BIND;
 			static Bind_t tBind = {};
@@ -2738,29 +2738,29 @@ void CMenu::MenuSettings(int iTab)
 
 			if (BeginWidgetTable(0, vTable))
 			{
-				FSDropdown("Name", &tBind.m_sName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate);
+				FSDropdown("Имя", &tBind.m_sName, {}, FDropdownEnum::Left | FSDropdownEnum::AutoUpdate);
 				{
 					auto sParent = bParent ? "..." : tBind.m_iParent != DEFAULT_BIND && tBind.m_iParent < F::Binds.m_vBinds.size() ? F::Binds.m_vBinds[tBind.m_iParent].m_sName : "None";
-					if (FButton(std::format("Parent: {}", sParent).c_str(), FButtonEnum::Right | FButtonEnum::SameLine | FButtonEnum::NoUpper, { 0, 40 }))
+					if (FButton(std::format("Родитель: {}", sParent).c_str(), FButtonEnum::Right | FButtonEnum::SameLine | FButtonEnum::NoUpper, { 0, 40 }))
 						bParent = 2;
 				}
-				FDropdown("Type", &tBind.m_iType, { "Key", "Class", "Weapon type", "Item slot", "Misc" }, {}, FDropdownEnum::Left);
+				FDropdown("Тип", &tBind.m_iType, { "Клавиша", "Класс", "Тип оружия", "Слот", "Разное" }, {}, FDropdownEnum::Left);
 				switch (tBind.m_iType)
 				{
 				case BindEnum::Key: FDropdown("Behavior", &tBind.m_iInfo, { "Hold", "Toggle", "Double click" }, {}, FDropdownEnum::Right); break;
-				case BindEnum::Class: FDropdown("Class", &tBind.m_iInfo, { "Scout", "Soldier", "Pyro", "Demoman", "Heavy", "Engineer", "Medic", "Sniper", "Spy" }, {}, FDropdownEnum::Right); break;
-				case BindEnum::WeaponType: FDropdown("Weapon type", &tBind.m_iInfo, { "Hitscan", "Projectile", "Melee", "Throwable" }, {}, FDropdownEnum::Right); break;
-				case BindEnum::ItemSlot: FDropdown("Item slot", &tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::Right); break;
-				case BindEnum::Misc: FDropdown("Misc", &tBind.m_iInfo, { "Spectated", "Spectated 1st", "Spectated 3rd", "##Divider", "Zoomed", "Aiming" }, {}, FDropdownEnum::Right); break;
+				case BindEnum::Class: FDropdown("Класс", &tBind.m_iInfo, { "Скаут", "Солдат", "Пиро", "Демомен", "Хэви", "Инженер", "Медик", "Снайпер", "Шпион" }, {}, FDropdownEnum::Right); break;
+				case BindEnum::WeaponType: FDropdown("Тип оружия", &tBind.m_iInfo, { "Хитскан", "Снаряды", "Ближний бой", "Throwable" }, {}, FDropdownEnum::Right); break;
+				case BindEnum::ItemSlot: FDropdown("Слот", &tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::Right); break;
+				case BindEnum::Misc: FDropdown("Разное", &tBind.m_iInfo, { "Spectated", "Spectated 1st", "Spectated 3rd", "##Divider", "Zoomed", "Aiming" }, {}, FDropdownEnum::Right); break;
 				}
 			} EndChild();
 
 			if (BeginWidgetTable(1, vTable))
 			{
 				int iNot = tBind.m_bNot;
-				FDropdown("While", &iNot, { "Active", "Not active" }, {}, FDropdownEnum::Left);
+				FDropdown("While", &iNot, { "Активен", "Не активен" }, {}, FDropdownEnum::Left);
 				tBind.m_bNot = iNot;
-				FDropdown("Visibility", &tBind.m_iVisibility, { "Always", "While active", "Hidden" }, {}, FDropdownEnum::Right);
+				FDropdown("Видимость", &tBind.m_iVisibility, { "Always", "While active", "Hidden" }, {}, FDropdownEnum::Right);
 				if (tBind.m_iType == 0)
 					FKeybind("Key", tBind.m_iKey, FButtonEnum::None, { Vars::Menu::PrimaryKey[DEFAULT_BIND], Vars::Menu::SecondaryKey[DEFAULT_BIND] }, { 0, 40 }, -96);
 
@@ -2792,7 +2792,7 @@ void CMenu::MenuSettings(int iTab)
 
 			PushStyleColor(ImGuiCol_Text, F::Render.Inactive.Value);
 			SetCursorPos({ H::Draw.Scale(13), H::Draw.Scale(128) });
-			FText("Binds");
+			FText("Бинды");
 			SetCursorPosY(GetCursorPosY() - H::Draw.Scale(5));
 			PopStyleColor();
 
@@ -3051,14 +3051,14 @@ void CMenu::MenuSettings(int iTab)
 								_tBind.m_sName = sInput;
 						}
 
-						FDropdown("Type", &_tBind.m_iType, { "Key", "Class", "Weapon type", "Item slot", "Misc" }, {}, FDropdownEnum::Left);
+						FDropdown("Тип", &_tBind.m_iType, { "Клавиша", "Класс", "Тип оружия", "Слот", "Разное" }, {}, FDropdownEnum::Left);
 						switch (_tBind.m_iType)
 						{
 						case BindEnum::Key: FDropdown("Behavior", &_tBind.m_iInfo, { "Hold", "Toggle", "Double click" }, {}, FDropdownEnum::Right); break;
-						case BindEnum::Class: FDropdown("Class", &_tBind.m_iInfo, { "Scout", "Soldier", "Pyro", "Demoman", "Heavy", "Engineer", "Medic", "Sniper", "Spy" }, {}, FDropdownEnum::Right); break;
-						case BindEnum::WeaponType: FDropdown("Weapon type", &_tBind.m_iInfo, { "Hitscan", "Projectile", "Melee", "Throwable" }, {}, FDropdownEnum::Right); break;
-						case BindEnum::ItemSlot: FDropdown("Item slot", &_tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::Right); break;
-						case BindEnum::Misc: FDropdown("Misc", &_tBind.m_iInfo, { "Spectated", "Spectated 1st", "Spectated 3rd", "##Divider", "Zoomed", "Aiming" }, {}, FDropdownEnum::Right); break;
+						case BindEnum::Class: FDropdown("Класс", &_tBind.m_iInfo, { "Скаут", "Солдат", "Пиро", "Демомен", "Хэви", "Инженер", "Медик", "Снайпер", "Шпион" }, {}, FDropdownEnum::Right); break;
+						case BindEnum::WeaponType: FDropdown("Тип оружия", &_tBind.m_iInfo, { "Хитскан", "Снаряды", "Ближний бой", "Throwable" }, {}, FDropdownEnum::Right); break;
+						case BindEnum::ItemSlot: FDropdown("Слот", &_tBind.m_iInfo, { "1", "2", "3", "4", "5", "6", "7", "8", "9" }, {}, FDropdownEnum::Right); break;
+						case BindEnum::Misc: FDropdown("Разное", &_tBind.m_iInfo, { "Spectated", "Spectated 1st", "Spectated 3rd", "##Divider", "Zoomed", "Aiming" }, {}, FDropdownEnum::Right); break;
 						}
 						if (_tBind.m_iType == BindEnum::Key)
 							FKeybind("Key", _tBind.m_iKey);
@@ -3068,9 +3068,9 @@ void CMenu::MenuSettings(int iTab)
 					}
 					else if (FBeginPopupModal(std::format("DeleteBind{}", _iBind).c_str()))
 					{
-						FText(std::format("Do you really want to delete '{}'{}?", _tBind.m_sName, F::Binds.HasChildren(_iBind) ? " and all of its children" : "").c_str());
+						FText(std::format("Удалить «{}»{}?", _tBind.m_sName, F::Binds.HasChildren(_iBind) ? " и всех его потомков" : "").c_str());
 
-						if (FButton("Yes", FButtonEnum::Left))
+						if (FButton("Да", FButtonEnum::Left))
 						{
 							F::Binds.RemoveBind(_iBind);
 							CloseCurrentPopup();
@@ -3078,7 +3078,7 @@ void CMenu::MenuSettings(int iTab)
 							iBind = DEFAULT_BIND;
 							tBind = {};
 						}
-						if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+						if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 							CloseCurrentPopup();
 
 						EndPopup();
@@ -3095,7 +3095,7 @@ void CMenu::MenuSettings(int iTab)
 			{
 				PushStyleColor(ImGuiCol_Text, F::Render.Inactive.Value);
 				SetCursorPos({ H::Draw.Scale(13), GetCursorPosY() + H::Draw.Scale(5) });
-				FText("Dangling");
+				FText("Без родителя");
 				SetCursorPosY(GetCursorPosY() - H::Draw.Scale(5));
 				PopStyleColor();
 
@@ -3132,14 +3132,14 @@ void CMenu::MenuSettings(int iTab)
 				TableNextColumn();
 			}
 
-			if (Section("Manager"))
+			if (Section("Менеджер"))
 			{
 				static std::string sStaticName;
 
-				FSDropdown("Name", &sStaticName, {}, FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("CREATE").x + H::Draw.Scale(40)) - 44);
+				FSDropdown("Имя", &sStaticName, {}, FSDropdownEnum::AutoUpdate, -H::Draw.Unscale(FCalcTextSize("СОЗДАТЬ").x + H::Draw.Scale(40)) - 44);
 				PushDisabled(sStaticName.empty());
 				{
-					if (FButton("Create", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
+					if (FButton("Создать", FButtonEnum::Fit | FButtonEnum::SameLine, { 0, 40 }))
 					{
 						F::Materials.AddMaterial(sStaticName.c_str());
 						sStaticName.clear();
@@ -3186,14 +3186,14 @@ void CMenu::MenuSettings(int iTab)
 							OpenPopup(std::format("DeleteMat{}", tMaterial.m_sName).c_str());
 						if (FBeginPopupModal(std::format("DeleteMat{}", tMaterial.m_sName).c_str()))
 						{
-							FText(std::format("Do you really want to delete '{}'?", tMaterial.m_sName).c_str());
+							FText(std::format("Удалить «{}»?", tMaterial.m_sName).c_str());
 
-							if (FButton("Yes", FButtonEnum::Left))
+							if (FButton("Да", FButtonEnum::Left))
 							{
 								F::Materials.RemoveMaterial(tMaterial.m_sName.c_str());
 								CloseCurrentPopup();
 							}
-							if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+							if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 								CloseCurrentPopup();
 
 							EndPopup();
@@ -3225,23 +3225,23 @@ void CMenu::MenuSettings(int iTab)
 				if (sCurrentMaterial.length())
 				{
 					SetCursorPosY(GetScrollY() + GetStyle().WindowPadding.y);
-					if (Section("Editor", 0, GetWindowHeight() - GetStyle().WindowPadding.y * 2, true))
+					if (Section("Редактор", 0, GetWindowHeight() - GetStyle().WindowPadding.y * 2, true))
 					{
 						// Toolbar
 						if (!bLockedMaterial)
 						{
-							if (FButton("Save", FButtonEnum::Fit))
+							if (FButton("Сохранить", FButtonEnum::Fit))
 							{
 								auto sText = tTextEditor.GetText();
 								F::Materials.EditMaterial(sCurrentMaterial.c_str(), sText.c_str());
 							}
 							SameLine();
 						}
-						if (FButton("Close", FButtonEnum::Fit))
+						if (FButton("Закрыть", FButtonEnum::Fit))
 							sCurrentMaterial = "";
 						SetCursorPosY(H::Draw.Scale(52));
 						PushStyleColor(ImGuiCol_Text, F::Render.Inactive.Value);
-						FText(std::format("{}: {}", bLockedMaterial ? "Viewing" : "Editing", sCurrentMaterial).c_str(), {}, FTextEnum::Right);
+						FText(std::format("{}: {}", bLockedMaterial ? "Просмотр" : "Редактирование", sCurrentMaterial).c_str(), {}, FTextEnum::Right);
 						PopStyleColor();
 
 						// Text editor
@@ -3295,55 +3295,55 @@ void CMenu::MenuSettings(int iTab)
 	// Extra
 	case 3:
 	{
-		if (Section("Functions"))
+		if (Section("Функции"))
 		{
 			if (FButton("Fullupdate", FButtonEnum::Left))
 				I::EngineClient->ClientCmd_Unrestricted("cl_fullupdate");
-			if (FButton("Retry", FButtonEnum::Right | FButtonEnum::SameLine))
+			if (FButton("Повторить", FButtonEnum::Right | FButtonEnum::SameLine))
 				I::EngineClient->ClientCmd_Unrestricted("retry");
 			if (FButton("Console", FButtonEnum::Left))
 				I::EngineClient->ClientCmd_Unrestricted("toggleconsole");
-			if (FButton("Reload materials", FButtonEnum::Right | FButtonEnum::SameLine) && F::Materials.m_bLoaded)
+			if (FButton("Перезагрузить материалы", FButtonEnum::Right | FButtonEnum::SameLine) && F::Materials.m_bLoaded)
 				F::Materials.ReloadMaterials();
 
 			if (!I::EngineClient->IsConnected())
 			{
-				if (FButton("Unlock achievements", FButtonEnum::Left))
+				if (FButton("Разблокировать достижения", FButtonEnum::Left))
 					OpenPopup("UnlockAchievements");
-				if (FButton("Lock achievements", FButtonEnum::Right | FButtonEnum::SameLine))
+				if (FButton("Заблокировать достижения", FButtonEnum::Right | FButtonEnum::SameLine))
 					OpenPopup("LockAchievements");
 
 				if (FBeginPopupModal("UnlockAchievements"))
 				{
-					FText("Do you really want to unlock all achievements?");
+					FText("Разблокировать все достижения?");
 
-					if (FButton("Yes, unlock", FButtonEnum::Left))
+					if (FButton("Да, разблокировать", FButtonEnum::Left))
 					{
 						F::Misc.UnlockAchievements();
 						CloseCurrentPopup();
 					}
-					if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+					if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 						CloseCurrentPopup();
 
 					EndPopup();
 				}
 				else if (FBeginPopupModal("LockAchievements"))
 				{
-					FText("Do you really want to lock all achievements?");
+					FText("Заблокировать все достижения?");
 
-					if (FButton("Yes, lock", FButtonEnum::Left))
+					if (FButton("Да, заблокировать", FButtonEnum::Left))
 					{
 						F::Misc.LockAchievements();
 						CloseCurrentPopup();
 					}
-					if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+					if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 						CloseCurrentPopup();
 
 					EndPopup();
 				}
 			}
 		} EndSection();
-		if (Section("Debug", 8))
+		if (Section("Отладка", 8))
 		{
 			FToggle(Vars::Debug::Info, FToggleEnum::Left);
 			FToggle(Vars::Debug::Logging, FToggleEnum::Right);
@@ -3450,13 +3450,13 @@ void CMenu::MenuSettings(int iTab)
 		/*
 		if (Vars::Debug::Options.Value)
 		{
-			if (Section("Convar spoofer"))
+			if (Section("Спуфер конваров"))
 			{
 				static std::string sName = "", sValue = "";
 
 				FSDropdown("Convar", &sName, {}, FDropdownEnum::Left);
-				FSDropdown("Value", &sValue, {}, FDropdownEnum::Right);
-				if (FButton("Send"))
+				FSDropdown("Значение", &sValue, {}, FDropdownEnum::Right);
+				if (FButton("Отправить"))
 				{
 					if (auto pNetChan = static_cast<CNetChannel*>(I::EngineClient->GetNetChannelInfo()))
 					{
@@ -3471,7 +3471,7 @@ void CMenu::MenuSettings(int iTab)
 		}
 		*/
 #ifdef WORLD_DEBUG
-		if (Section("World"))
+		if (Section("Мир"))
 		{
 			FDropdown(Vars::World::Faces, FDropdownEnum::Left);
 			FDropdown(Vars::World::Draw, FDropdownEnum::Right);
@@ -3485,7 +3485,7 @@ void CMenu::MenuSettings(int iTab)
 		} EndSection();
 #endif
 #ifdef DEBUG_HOOKS
-		if (Section("Hooks"))
+		if (Section("Хуки"))
 		{
 			auto SetAll = [](bool bEnable)
 			{
@@ -3504,9 +3504,9 @@ void CMenu::MenuSettings(int iTab)
 					}
 				}
 			};
-			if (FButton("Enable all", FButtonEnum::Left))
+			if (FButton("Включить всё", FButtonEnum::Left))
 				SetAll(true);
-			if (FButton("Disable all", FButtonEnum::Right | FButtonEnum::SameLine))
+			if (FButton("Выключить всё", FButtonEnum::Right | FButtonEnum::SameLine))
 				SetAll(false);
 
 			int i = 0; for (auto& pBase : G::Vars)
@@ -4026,7 +4026,7 @@ void CMenu::DrawBinds()
 			IconImage(ICON_MD_KEYBOARD, F::Render.Accent);
 			PushFont(F::Render.FontLarge);
 			SetCursorPos({ H::Draw.Scale(30), H::Draw.Scale(7) });
-			FText("Binds");
+			FText("Бинды");
 			PopFont();
 
 			iListStart = 36;
@@ -4090,15 +4090,15 @@ void CMenu::DrawBinds()
 
 				if (FBeginPopupModal(std::format("DeleteBind{}", iBind).c_str()))
 				{
-					FText(std::format("Do you really want to delete '{}'{}?", tBind.m_sName, F::Binds.HasChildren(iBind) ? " and all of its children" : "").c_str());
+					FText(std::format("Удалить «{}»{}?", tBind.m_sName, F::Binds.HasChildren(iBind) ? " и всех его потомков" : "").c_str());
 
 					SetCursorPosY(GetCursorPosY() - 8); // stupid and i don't know why this is needed here
-					if (FButton("Yes", FButtonEnum::Left))
+					if (FButton("Да", FButtonEnum::Left))
 					{
 						F::Binds.RemoveBind(iBind);
 						CloseCurrentPopup();
 					}
-					if (FButton("No", FButtonEnum::Right | FButtonEnum::SameLine))
+					if (FButton("Нет", FButtonEnum::Right | FButtonEnum::SameLine))
 						CloseCurrentPopup();
 
 					EndPopup();
@@ -4152,12 +4152,12 @@ void CMenu::Render()
 		ManageVars();
 		DrawMenu();
 
-		AddDraggable("Ticks", Vars::Menu::TicksDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Ticks);
-		AddDraggable("Crit hack", Vars::Menu::CritsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::CritHack);
-		AddDraggable("Spectators", Vars::Menu::SpectatorsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Spectators);
-		AddDraggable("Ping", Vars::Menu::PingDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Ping);
-		AddDraggable("Conditions", Vars::Menu::ConditionsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Conditions);
-		AddDraggable("Seed prediction", Vars::Menu::SeedPredictionDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::SeedPrediction);
+		AddDraggable("Тики", Vars::Menu::TicksDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Ticks);
+		AddDraggable("Критхак", Vars::Menu::CritsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::CritHack);
+		AddDraggable("Наблюдатели", Vars::Menu::SpectatorsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Spectators);
+		AddDraggable("Пинг", Vars::Menu::PingDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Ping);
+		AddDraggable("Состояния", Vars::Menu::ConditionsDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::Conditions);
+		AddDraggable("Предикт сида", Vars::Menu::SeedPredictionDisplay, FGet(Vars::Menu::Indicators) & Vars::Menu::IndicatorsEnum::SeedPrediction);
 		AddResizableDraggable("Camera", Vars::Visuals::Simulation::ProjectileWindow, FGet(Vars::Visuals::Simulation::ProjectileCamera), OptionalConstraints);
 
 		F::Render.Cursor = GetMouseCursor();
