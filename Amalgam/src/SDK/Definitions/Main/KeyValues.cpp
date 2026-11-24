@@ -4,7 +4,7 @@
 
 #define Q_ARRAYSIZE(A) (sizeof(A)/sizeof((A)[0]))
 
-MAKE_SIGNATURE(KeyValues_Initialize, "engine.dll", "40 53 48 83 EC ? F6 41 23 ? 48 8B C2 48 8B D9 74", 0x0);
+MAKE_SIGNATURE(KeyValues_Initialize, "engine.dll", "48 89 5C 24 08 48 89 74 24 10 57 48 83 EC 20 80 61 23 FC 33 F6 48 89 71 40 48 8B FA 48 8B D9 45 84 C0 74", 0x0);
 MAKE_SIGNATURE(KeyValues_LoadFromBuffer, "engine.dll", "4C 89 4C 24 ? 48 89 4C 24 ? 55 56", 0x0);
 MAKE_SIGNATURE(KeyValues_GetSymbolForStringClassic, "engine.dll", "48 89 5C 24 ? 57 48 83 EC ? 0F B6 DA 48 8B F9", 0x0);
 MAKE_SIGNATURE(KeyValues_GetStringForSymbolClassic, "engine.dll", "40 53 48 83 EC ? 8B D9 FF 15", 0x0);
@@ -33,7 +33,7 @@ KeyValues::KeyValues(const char* name)
 
 void KeyValues::Initialize(const char* name)
 {
-	S::KeyValues_Initialize.Call<KeyValues*>(this, name);
+	S::KeyValues_Initialize.Call<KeyValues*>(this, name, false);
 }
 
 bool KeyValues::LoadFromBuffer(char const* resourceName, const char* pBuffer, void* pFileSystem, const char* pPathID)
